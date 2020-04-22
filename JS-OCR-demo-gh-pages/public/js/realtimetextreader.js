@@ -148,7 +148,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
                 $('#takePicture').removeAttr('disabled');
                 //Hide the 'enable the camera' info
                 $('#step1 figure').removeClass('not-ready');
-                setInterval(step2_recordSnapShot, 1000);
+                setInterval(step2_recordSnapShot, 500);
             })
             .fail(function(error) {
                 showError(error);
@@ -190,6 +190,8 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
         var step2Image = document.querySelector('#step2 img');
 
         var ctx = canvas.getContext('2d');
+
+        // Draw image is required for Tesseract to recognize possible text
         ctx.drawImage(
             step2Image,
             0,
@@ -197,23 +199,13 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
             canvas.width,
             canvas.height);
 
-        /*
-        The only problem left is having to use Tesseract on local files
-        or local servers as Tesseract cannot run due to DOMException: Security Error
-        */
-
-        var spinner = $('.spinner');
-        spinner.show();
-        $('blockquote p').text('');
-        $('blockquote footer').text('');
-
         // do the OCR!
         // Also where the DOMException: Security Error is likely triggered
         Tesseract.recognize(ctx).then(function(result) {
             var resultText = result.text ? result.text.trim() : '';
+            console.log(resultText);
 
             //show the result
-            spinner.hide();
             $('blockquote p').html('&bdquo;' + resultText + '&ldquo;');
             $('blockquote footer').text('(' + resultText.length + ' characters)');
         });
