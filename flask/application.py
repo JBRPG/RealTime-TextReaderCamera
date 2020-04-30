@@ -16,6 +16,7 @@ def show_game():
 
 @app.route('/get-letters/')
 def get_letters():
-    return jsonify(['a', 'b', 'c'])
+    from src.recognize_text import get_letters_from_image
+    return jsonify(get_letters_from_image('src/images/letters_3.jpg'))
 
    

@@ -3,6 +3,7 @@ def get_file_path(file_name):
     import sys
     dir_path = os.path.dirname(sys.argv[0])
     return os.path.join(dir_path, file_name)
+    # return file_name
 
 def get_text_from_image_from_file(image_path):
     import pytesseract
