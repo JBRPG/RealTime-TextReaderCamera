@@ -61,18 +61,18 @@ def capture_camera_upload():
         if 'file' not in request.files:
            print('No file attached in request')
            return redirect(request.url)
-       file = request.files['file']
-       if file.filename == '':
-           print('No file selected')
-           return redirect(request.url)
-       if file and allowed_file(file.filename):
-           filename = secure_filename(file.filename)
-           file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-           #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
-           results = get_letters_from_image(UPLOAD_FOLDER + filename)
-           # jsonify(get_letters_from_image(UPLOAD_FOLDER + filename))
-           # return redirect(url_for('uploader', filename=filename))
-           return render_template('uploader.html', results=results )
+        file = request.files['file']
+        if file.filename == '':
+            print('No file selected')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
+            results = get_letters_from_image(UPLOAD_FOLDER + filename)
+            # jsonify(get_letters_from_image(UPLOAD_FOLDER + filename))
+            # return redirect(url_for('uploader', filename=filename))
+            return render_template('uploader.html', results=results )
         return render_template('camera.html')
     else:
         return render_template('camera.html')

@@ -122,7 +122,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
                                 clearInterval(waitingForSize);
                                 deferred.resolve();
                             }
-                        }, 100);
+                        }, 5000); //set to 5 seconds
                     } else {
                         deferred.resolve();
                     }
@@ -148,7 +148,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
                 $('#takePicture').removeAttr('disabled');
                 //Hide the 'enable the camera' info
                 $('#step1 figure').removeClass('not-ready');
-                setInterval(step2_recordSnapShot, 500);
+                setInterval(step2_recordSnapShot, 5000);
             })
             .fail(function(error) {
                 showError(error);
@@ -199,11 +199,19 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
             canvas.width,
             canvas.height);
 
-        // function convertCanvasToImage(canvas) {
-        //     var image = new Image();
-        //     image.src = canvas.toDataURL("image/png");
-        //     return image;
-        // }
+        function convertCanvasToBinary(canvas) {
+            return canvas.toDataURL("image/png");
+        }
+        const testBinaryImage = convertCanvasToBinary(canvas);
+        console.log(testBinaryImage);
+        fetch('/capture-camera/', {
+            method: "POST",
+            body: testBinaryImage,
+            headers: {
+                "Content-type": "image/png"
+            }
+        });
+        // alert('done!');
 
         // John: how do you figure out how to convert the canvas to 
         //       an image binary in order to POST it to the local 
@@ -211,14 +219,14 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
 
         // do the OCR!
         // Also where the DOMException: Security Error is likely triggered
-        Tesseract.recognize(ctx).then(function(result) {
-            var resultText = result.text ? result.text.trim() : '';
-            console.log(resultText);
+        // Tesseract.recognize(ctx).then(function(result) {
+        //     var resultText = result.text ? result.text.trim() : '';
+        //     console.log(resultText);
 
-            //show the result
-            $('blockquote p').html('&bdquo;' + resultText + '&ldquo;');
-            $('blockquote footer').text('(' + resultText.length + ' characters)');
-        });
+        //     //show the result
+        //     $('blockquote p').html('&bdquo;' + resultText + '&ldquo;');
+        //     $('blockquote footer').text('(' + resultText.length + ' characters)');
+        // });
     }
 
 
