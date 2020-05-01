@@ -17,16 +17,8 @@ app.engine('hbs', hbs({
 }));
 
 //Serves static files (we need it to import a css file)
-app.use(express.static('public'))
+app.use(express.static('public'));
 
-/*
-Cannot get the local server to run the open source demo
-on filename nor local servers
-*/
-
-// app.get('/', function (req, res){
-//     res.sendFile(__dirname + "/../index.html");
-// });
 
 app.get('/', (req, res) => {
     //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"

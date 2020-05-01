@@ -22,10 +22,10 @@ def crop_and_simplify(img, rect):
     a = cropped[4:h-4, 4:w-4]
     gray = cv.split(cropped)[2]
     _retval, bin = cv.threshold(gray, 120, 255, cv.THRESH_BINARY)
-    kernel = np.ones((1,1), np.uint8) 
+    kernel = np.ones((1,1), np.uint8)
     b = cv.erode(bin, kernel, iterations=1)
     b = cv.merge([b, b, b])
-    kernel = np.ones((3,3), np.uint8) 
+    kernel = np.ones((3,3), np.uint8)
     c = cv.erode(bin, kernel, iterations=1)
     c = cv.merge([c, c, c])
     return [a, b, c]
@@ -79,15 +79,15 @@ def read_letter(img, rect, save=False):
         if len(ocrText) == 1:
             print(ocrText, (x1, y1))
             file_name = 'results/tiles_cropped_{0}_{1}.jpg'.format(x1, y1)
-        else: 
+        else:
             file_name = 'results/tiles_cropped_{0}_{1}_bad.jpg'.format(x1, y1)
         # print(ocrText, x1)
-        
+
         if save:
-            print('saving:', file_name), 
+            print('saving:', file_name),
             cv.putText(image, ocrText,(0,20),cv.FONT_HERSHEY_COMPLEX,0.7,(255,0,0),1,cv.LINE_AA)
             cv.imwrite(get_file_path(file_name), image)
-            
+
         if len(ocrText) == 1:
             return ocrText, str(x1).zfill(3) + '_' + str(y1).zfill(3)
         #else:
@@ -103,11 +103,10 @@ def get_letters_from_image(img_path, debug=False):
         if result:
             letter_map[result[1]] = result[0]
     letters = []
-    for key in sorted(letter_map.keys()) :  
-        letters.append(letter_map[key])   
+    for key in sorted(letter_map.keys()) :
+        letters.append(letter_map[key])
     if debug:
         cv.drawContours( img, squares, -1, (255, 30, 0), 3 )
         cv.imwrite(get_file_path("results/tiles_outlined.jpg"), img)
     print(letter_map)
     return letters
-
