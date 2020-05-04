@@ -203,18 +203,30 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
             return canvas.toDataURL("image/png");
         }
         const testBinaryImage = convertCanvasToBinary(canvas);
+        // Test with Ajax section
+        //*
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST",'saveImage.php',false);
+        ajax.setRequestHeader('Content-Type', 'application/upload');
+        ajax.send(testBinaryImage);
+        //*/
+        // Ajax Section
+
+
         console.log(testBinaryImage);
         fetch('/capture-camera/', {
             method: "POST",
             body: testBinaryImage,
             headers: {
                 "Content-type": "image/png"
-            }
+            },
+            name: 'file'
         });
+
         // alert('done!');
 
-        // John: how do you figure out how to convert the canvas to 
-        //       an image binary in order to POST it to the local 
+        // John: how do you figure out how to convert the canvas to
+        //       an image binary in order to POST it to the local
         //       Flask route (/capture-camera/)
 
         // do the OCR!
