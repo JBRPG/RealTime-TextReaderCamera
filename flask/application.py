@@ -68,8 +68,8 @@ def capture_camera_upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
-            results = get_letters_from_image(UPLOAD_FOLDER + filename)
+            # process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
+            ## results = get_letters_from_image(UPLOAD_FOLDER + filename)
             # jsonify(get_letters_from_image(UPLOAD_FOLDER + filename))
             # return redirect(url_for('uploader', filename=filename))
             return render_template('uploader.html', results=results )
