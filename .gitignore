@@ -1,4 +1,6 @@
 __pycache__
-.DS_Store
-.pyc
+*.DS_Store
+*.pyc
 results
+*tesseract_tests*
+*flask/uploads*
