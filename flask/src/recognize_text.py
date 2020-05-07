@@ -2,6 +2,7 @@ import numpy as np
 import cv2 as cv
 import pytesseract
 import math
+import os
 try:
     from src.utilities import get_file_path
     from src.transform import four_point_transform
@@ -43,7 +44,7 @@ def is_same_shape(a, b):
     return p1.intersects(p2) and is_same_size
 
 def find_squares(img):
-    img = cv.GaussianBlur(img, (5, 5), 0)
+    # img = cv.GaussianBlur(img, (5, 5), 0)
     squares = []
     for gray in cv.split(img):
         for thrs in range(0, 255, 26):
@@ -59,7 +60,9 @@ def find_squares(img):
                 if len(cnt) == 4 and cv.contourArea(cnt) > 1000 and cv.isContourConvex(cnt):
                     cnt = cnt.reshape(-1, 2)
                     max_cos = np.max([angle_cos( cnt[i], cnt[(i+1) % 4], cnt[(i+2) % 4] ) for i in range(4)])
-                    if max_cos < 0.1:
+                    # if max_cos < 0.1:
+                    # if max_cos < 0.3:
+                    if max_cos < 0.5:
                         is_duplicate = False
                         for square in squares:
                             is_duplicate = is_same_shape(square, cnt)
@@ -84,6 +87,8 @@ def read_letter(img, rect, save=False):
         # print(ocrText, x1)
 
         if save:
+            pwd = os.path.dirname(os.path.abspath(__file__))
+            file_name = pwd + '/' + file_name
             print('saving:', file_name),
             cv.putText(image, ocrText,(0,20),cv.FONT_HERSHEY_COMPLEX,0.7,(255,0,0),1,cv.LINE_AA)
             cv.imwrite(get_file_path(file_name), image)
@@ -94,9 +99,10 @@ def read_letter(img, rect, save=False):
         #    print('Trying again...')
 
 def get_letters_from_image(img_path, debug=False):
+    print('opening...', img_path)
     img = cv.imread(img_path)
     squares = find_squares(img)
-    print(len(squares), 'squares found')
+    print(squares, len(squares), 'squares found')
     letter_map = {}
     for square in squares[1:]:
         result = read_letter(img, square, save=debug)
@@ -107,6 +113,8 @@ def get_letters_from_image(img_path, debug=False):
         letters.append(letter_map[key])
     if debug:
         cv.drawContours( img, squares, -1, (255, 30, 0), 3 )
-        cv.imwrite(get_file_path("results/tiles_outlined.jpg"), img)
+        pwd = os.path.dirname(os.path.abspath(__file__))
+        file_name = pwd + '/' + "results/tiles_outlined.jpg"
+        cv.imwrite(file_name, img)
     print(letter_map)
     return letters

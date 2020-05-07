@@ -139,7 +139,8 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
      *********************************/
 
     // Functions
-    function step1_cameraSetup(){
+
+    const step1_cameraSetup = () => {
         checkRequirements()
             .then(searchForRearCamera)
             .then(setupVideo)
@@ -148,26 +149,25 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
                 $('#takePicture').removeAttr('disabled');
                 //Hide the 'enable the camera' info
                 $('#step1 figure').removeClass('not-ready');
-                setInterval(step2_recordSnapShot, 5000);
+                //setInterval(step2_recordSnapShot, 5000);
             })
             .fail(function(error) {
-                showError(error);
+                console.error(error);
             });
-    }
+    };
 
-    function step2_recordSnapShot(){
+    const step2_recordSnapShot = () => {
         var canvas = document.querySelector('#step2 canvas');
-        var img = document.querySelector('#step2 img');
-
-        //setup canvas
         canvas.width = pictureWidth;
         canvas.height = pictureHeight;
-
         var ctx = canvas.getContext('2d');
-
         //draw picture from video on canvas
         ctx.drawImage(video, 0, 0);
+        convertToBlackAndWhite(canvas);
+        sendToServer(fxCanvas.toDataURL());
+    };
 
+    const convertToBlackAndWhite = (canvas) => {
         //modify the picture using glfx.js filters
         texture = fxCanvas.texture(canvas);
         fxCanvas.draw(texture)
@@ -178,74 +178,34 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
 
         window.texture = texture;
         window.fxCanvas = fxCanvas;
-        $(img)
-            //show output from glfx.js
-            .attr('src', fxCanvas.toDataURL());
-        step3_convertToText();
-
-    }
-
-    function step3_convertToText(){
-        var canvas = document.querySelector('#step3 canvas');
-        var step2Image = document.querySelector('#step2 img');
-
-        var ctx = canvas.getContext('2d');
-
-        // Draw image is required for Tesseract to recognize possible text
-        ctx.drawImage(
-            step2Image,
-            0,
-            0,
-            canvas.width,
-            canvas.height);
-
-        function convertCanvasToBinary(canvas) {
-            return canvas.toDataURL("image/png");
-        }
-        const testBinaryImage = convertCanvasToBinary(canvas);
-        // Test with Ajax section
-        //*
-        var ajax = new XMLHttpRequest();
-        ajax.open("POST",'saveImage.php',false);
-        ajax.setRequestHeader('Content-Type', 'application/upload');
-        ajax.send(testBinaryImage);
-        //*/
-        // Ajax Section
-
-
-        console.log(testBinaryImage);
-        fetch('/capture-camera/', {
+        var img = document.querySelector('#step2 img');
+        $(img).attr('src', fxCanvas.toDataURL());
+    };
+  
+    const sendToServer = (binaryImage) => {
+        console.log('sending image to server...');
+        var canvas = document.querySelector('#step2 canvas');
+        binaryImage = canvas.toDataURL("image/png", 0.5);
+        fetch('/', {
             method: "POST",
-            body: testBinaryImage,
+            body: binaryImage,
             headers: {
                 "Content-type": "image/png"
-            },
-            name: 'file'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('#step3').innerHTML = JSON.stringify(data);
+            console.log(data);
         });
-
-        // alert('done!');
-
-        // John: how do you figure out how to convert the canvas to
-        //       an image binary in order to POST it to the local
-        //       Flask route (/capture-camera/)
-
-        // do the OCR!
-        // Also where the DOMException: Security Error is likely triggered
-        // Tesseract.recognize(ctx).then(function(result) {
-        //     var resultText = result.text ? result.text.trim() : '';
-        //     console.log(resultText);
-
-        //     //show the result
-        //     $('blockquote p').html('&bdquo;' + resultText + '&ldquo;');
-        //     $('blockquote footer').text('(' + resultText.length + ' characters)');
-        // });
-    }
-
+    };
 
     //start snapshot recorder immediately
     // then proceed to step 2
     // with a repeating interval every 1 second (1000 ms)
     step1_cameraSetup();
+
+    document.querySelector('button').onclick = step2_recordSnapShot;
 
 
 
