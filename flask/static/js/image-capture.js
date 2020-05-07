@@ -186,7 +186,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
     }
 
     function step3_convertToText(){
-        var canvas = document.querySelector('#step3 canvas');
+        var canvas = document.querySelector('#step2 canvas');
         var step2Image = document.querySelector('#step2 img');
 
         var ctx = canvas.getContext('2d');
@@ -200,10 +200,12 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
             canvas.height);
 
         function convertCanvasToBinary(canvas) {
-            return canvas.toDataURL("image/png");
+            return canvas.toDataURL("image/png", 0.5);
         }
         const testBinaryImage = convertCanvasToBinary(canvas);
         console.log(testBinaryImage);
+        const data = new FormData()
+        data.append('file', testBinaryImage)
         fetch('/capture-camera/', {
             method: "POST",
             body: testBinaryImage,
