@@ -24,36 +24,8 @@ def allowed_file(filename):
 
 # ------- Application ------- #
 
-@app.route('/get-letters/')
-def get_letters():
-    return jsonify(get_letters_from_image('src/images/letters_3.jpg'))
 
-@app.route('/get-letters-tiles/')
-def get_letters_tiles():
-    return jsonify(get_letters_from_image('src/images/tiles.png'))
-
-@app.route('/uploader/', methods=['GET', 'POST'])
-def uploader():
-    if request.method == 'POST':
-       #print(UPLOAD_FOLDER)
-       if 'file' not in request.files:
-           print('No file attached in request')
-           return redirect(request.url)
-       file = request.files['file']
-       if file.filename == '':
-           print('No file selected')
-           return redirect(request.url)
-       if file and allowed_file(file.filename):
-           filename = secure_filename(file.filename)
-           file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-           #process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
-           results = get_letters_from_image(UPLOAD_FOLDER + filename)
-           # jsonify(get_letters_from_image(UPLOAD_FOLDER + filename))
-           # return redirect(url_for('uploader', filename=filename))
-           return render_template('uploader.html', results=results )
-    return render_template('uploader.html')
-
-
+# 1. This endpoint is designed to work with the web cam
 @app.route('/', methods=['GET', 'POST'])
 def capture_camera_upload():
     import cv2
@@ -71,9 +43,33 @@ def capture_camera_upload():
         imgFile = open(filename, 'wb')
         imgFile.write(imgData)
         imgFile.close()
-        # filename = UPLOAD_FOLDER + 'test_image_o.png'
         results = get_letters_from_image(filename, debug=True)
         print(results)
         return jsonify(results)
     else:
         return render_template('camera.html')
+
+# 2. This endpoint is designed to work with an uploaded image
+@app.route('/uploader/', methods=['GET', 'POST'])
+def uploader():
+    if request.method == 'POST':
+       #print(UPLOAD_FOLDER)
+       if 'file' not in request.files:
+           print('No file attached in request')
+           return redirect(request.url)
+       file = request.files['file']
+       if file.filename == '':
+           print('No file selected')
+           return redirect(request.url)
+       if file and allowed_file(file.filename):
+           filename = secure_filename(file.filename)
+           file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+           results = get_letters_from_image(UPLOAD_FOLDER + filename)
+           return render_template('uploader.html', results=results )
+    return render_template('uploader.html')
+
+
+# 3. This endpoint is designed to work with an image that's saved in src/images
+@app.route('/get-letters/')
+def get_letters():
+    return jsonify(get_letters_from_image('src/images/letters_3.jpg'))
