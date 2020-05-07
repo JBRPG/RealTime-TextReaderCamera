@@ -11,8 +11,8 @@ except:
     from transform import four_point_transform
 lower_case = 'abcdefghijklmnopqrstuvwxyz'
 upper_case = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-tessdata_dir_config = '--psm 10 --oem 1 -c tessedit_char_whitelist=' + lower_case
-# tessdata_dir_config = '--psm 10 --oem 1 -c tessedit_char_whitelist=' + upper_case
+# tessdata_dir_config = '--psm 10 --oem 1 -c tessedit_char_whitelist=' + lower_case
+tessdata_dir_config = '--psm 10 --oem 1 -c tessedit_char_whitelist=' + upper_case
 # tessdata_dir_config = '--psm 10 --oem 1 -c tessedit_char_whitelist=' + upper_case + lower_case
 
 

@@ -151,7 +151,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
                 //setInterval(step2_recordSnapShot, 5000);
             })
             .fail(function(error) {
-                showError(error);
+                console.error(error);
             });
     };
 
@@ -184,7 +184,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
         console.log('sending image to server...');
         var canvas = document.querySelector('#step2 canvas');
         binaryImage = canvas.toDataURL("image/png", 0.5);
-        fetch('/capture-camera/', {
+        fetch('/', {
             method: "POST",
             body: binaryImage,
             headers: {

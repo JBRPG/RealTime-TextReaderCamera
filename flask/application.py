@@ -23,9 +23,6 @@ def allowed_file(filename):
    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # ------- Application ------- #
-@app.route('/')
-def show_game():
-    return render_template('index.html', name='Unknown User')
 
 @app.route('/get-letters/')
 def get_letters():
@@ -57,7 +54,7 @@ def uploader():
     return render_template('uploader.html')
 
 
-@app.route('/capture-camera/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def capture_camera_upload():
     import cv2
     import random
