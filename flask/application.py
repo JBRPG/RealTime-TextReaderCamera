@@ -65,17 +65,18 @@ def capture_camera_upload():
     if request.method == 'POST':
         # convert string of image data to uint8
         file = str(request.data)
-        # print(file)
         file = file.split(';')[-1]
         file = file.split(',')[-1]
-        # print(file)
+
         imgData = base64.b64decode(file)
-        filename = UPLOAD_FOLDER + 'test_image_' + random.choice('abcdefghijklmnopqrus') + '.png'
-        filename = UPLOAD_FOLDER + 'test_image_o.png'
+        filename = UPLOAD_FOLDER + 'test_image.png'
+        print(filename)
         imgFile = open(filename, 'wb')
         imgFile.write(imgData)
         imgFile.close()
-        results = get_letters_from_image(UPLOAD_FOLDER + filename)
+        # filename = UPLOAD_FOLDER + 'test_image_o.png'
+        results = get_letters_from_image(filename, debug=True)
+        print(results)
         return jsonify(results)
     else:
         return render_template('camera.html')
