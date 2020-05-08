@@ -1,7 +1,7 @@
 ########################################################
 # pip install flask
 # https://flask.palletsprojects.com/en/1.1.x/quickstart/
-# To run: 
+# To run:
 # $ export FLASK_APP=application.py
 # $ flask run
 ########################################################
@@ -73,3 +73,15 @@ def uploader():
 @app.route('/get-letters/')
 def get_letters():
     return jsonify(get_letters_from_image('src/images/letters_3.jpg'))
+
+
+# This is a test for uploading to PythonAnywhere
+@app.route('/update_server', methods=['POST'])
+    def webhook():
+        if request.method == 'POST':
+            repo = git.Repo('path/to/git_repo')
+            origin = repo.remotes.origin
+origin.pull()
+return 'Updated PythonAnywhere successfully', 200
+        else:
+            return 'Wrong event type', 400
