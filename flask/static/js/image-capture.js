@@ -139,6 +139,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
      *********************************/
 
     // Functions
+
     const step1_cameraSetup = () => {
         checkRequirements()
             .then(searchForRearCamera)
@@ -164,7 +165,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
         ctx.drawImage(video, 0, 0);
         convertToBlackAndWhite(canvas);
         sendToServer(fxCanvas.toDataURL());
-    }
+    };
 
     const convertToBlackAndWhite = (canvas) => {
         //modify the picture using glfx.js filters
@@ -180,6 +181,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
         var img = document.querySelector('#step2 img');
         $(img).attr('src', fxCanvas.toDataURL());
     };
+
     const sendToServer = (binaryImage) => {
         console.log('sending image to server...');
         var canvas = document.querySelector('#step2 canvas');
@@ -198,17 +200,13 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
         });
     };
 
-
-
     //start snapshot recorder immediately
     // then proceed to step 2
     // with a repeating interval every 1 second (1000 ms)
     step1_cameraSetup();
-
 
     document.querySelector('button').onclick = step2_recordSnapShot;
 
 
 
 })();
-
