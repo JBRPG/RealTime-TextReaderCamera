@@ -181,7 +181,7 @@ clearInterval(timerID; code|func) // can put inside setTimeout (() => clearSetti
         var img = document.querySelector('#step2 img');
         $(img).attr('src', fxCanvas.toDataURL());
     };
-  
+
     const sendToServer = (binaryImage) => {
         console.log('sending image to server...');
         var canvas = document.querySelector('#step2 canvas');

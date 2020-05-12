@@ -73,3 +73,7 @@ def uploader():
 @app.route('/get-letters/')
 def get_letters():
     return jsonify(get_letters_from_image('src/images/letters_3.jpg'))
+
+if __name__ == '__main__':
+    app.run()
+
