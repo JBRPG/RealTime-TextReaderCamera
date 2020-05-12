@@ -44,11 +44,8 @@ You will need to perform a few more steps in order to get Tesseract and OpenCV t
 
 1. Go to the "settings" tab of your application and add the following buildpack:
 https://github.com/heroku/heroku-buildpack-apt. This will allow you to install Ubuntu packages (OpenCV, Tesseract, etc.), which can be specified in the Aptfile.
-1. For Tesseract, you'll need to create an enviornment variable to point tell the application where the training data is located. Follow [this guide](https://medium.com/@zamhuang/heroku-how-to-install-service-and-setup-environment-variable-use-tesseract-ocr-as-example-d7c708c4ba8d). For my installation, I used the command shown below:
-
-```bash
-heroku config:set TESSDATA_PREFIX=/app/.apt/usr/share/tesseract-ocr/4.00/tessdata
-```
+1. For Tesseract, you'll need to create an enviornment variable to point tell the application where the training data is located. Follow [this guide](https://medium.com/@zamhuang/heroku-how-to-install-service-and-setup-environment-variable-use-tesseract-ocr-as-example-d7c708c4ba8d). For my installation, I used the command shown below:<br>`heroku config:set TESSDATA_PREFIX=/app/.apt/usr/share/tesseract-ocr/4.00/tessdata`
+1. Performance-wise, I read [this guide](https://devcenter.heroku.com/articles/python-gunicorn#basic-configuration) and update the concurrency environment variable to 3. Tesseract / OpenCV ran WAAAY faster:<br>`heroku config:set WEB_CONCURRENCY=3`
 
 When you're done with these steps, commit your changes and redeploy to Heroku by pushing an empty commit to Heroku:
 
