@@ -1,7 +1,7 @@
 ########################################################
 # pip install flask
 # https://flask.palletsprojects.com/en/1.1.x/quickstart/
-# To run: 
+# To run:
 # $ export FLASK_APP=application.py
 # $ flask run
 ########################################################
@@ -73,3 +73,6 @@ def uploader():
 @app.route('/get-letters/')
 def get_letters():
     return jsonify(get_letters_from_image('src/images/letters_3.jpg'))
+
+if __name__ == '__main__':
+    app.run()
