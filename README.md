@@ -61,7 +61,7 @@ Please see `static/js/image-capture.js` and `templates/uploader.html` for exampl
 To post an image taken from the canvas object:
 ### HTML
 ```html
-    <canvas id="my_canvas"></canvas>
+<canvas id="my_canvas"></canvas>
 ```
 ### JavaScript
 ```js
