@@ -1,6 +1,6 @@
-## Getting App to Run Locally (MacOS)
+# 1. Getting App to Run Locally (MacOS)
 
-### Install Dependencies
+## Install Dependencies
 ```bash 
 # install python requirements
 pip install -r requirements.txt
@@ -12,12 +12,12 @@ brew install opencv@2
 brew install tesseract
 ```
 
-### Clone Repo
+## Clone Repo
 ```bash
 git clone https://github.com/JBRPG/RealTime-TextReaderCamera.git tesseract-letters
 ```
 
-### Run Flask
+## Run Flask
 ```bash
 cd tesseract-letters
 export FLASK_APP=application.py
@@ -25,7 +25,9 @@ flask run
 # now, navigate to http://127.0.0.1:5000/
 ```
 
-## Getting App to Run on Heroku
+In order to run the code, you have to ensure that Flask is running.
+
+# 2. Getting App to Run on Heroku
 1. Create a new app on Heroku
 2. Go to the "settings" tab of your application and add the following buildpack:
 https://github.com/heroku/heroku-buildpack-apt. This will allow you to install Ubuntu packages (OpenCV, Tesseract, etc.)
@@ -36,4 +38,5 @@ heroku config:set TESSDATA_PREFIX=/app/.apt/usr/share/tesseract-ocr/4.00/tessdat
 ```
 
 
-## Posting Data to Server
+## 3. Posting Data to Server
+Please see `static/js/image-capture.js` and `templates/uploader.html` for examples re: how to transmit an image to the server.
