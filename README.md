@@ -38,5 +38,5 @@ heroku config:set TESSDATA_PREFIX=/app/.apt/usr/share/tesseract-ocr/4.00/tessdat
 ```
 
 
-## 3. Posting Data to Server
+# 3. Posting Data to Server
 Please see `static/js/image-capture.js` and `templates/uploader.html` for examples re: how to transmit an image to the server.
