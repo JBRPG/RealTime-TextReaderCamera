@@ -34,7 +34,7 @@ In order to run the code, you have to ensure that Flask is running. After you ge
 1. Create a new app on Heroku by logging into the Heroku website and using the Web UI.
 1. Using the heroku command line client:
    * Go to your command line and login: `heroku login -i`
-   * Connect your local repo to your newly created Heroku app: `heroku git:remote -a 'app-you-just-made'`
+   * Connect your local git repo (assumes you have already done this) to your newly created Heroku app: `heroku git:remote -a 'app-you-just-made'`
 1. Push your repo to Heroku: `git push heroku master`
 
 This will create your app and install all of the Python dependencies listed in your requirements.txt. It will also read your Procfile and see that you've created a web application (via Flask).
