@@ -3,4 +3,5 @@ __pycache__
 *.pyc
 results
 *tesseract_tests*
-*flask/uploads*
+uploads/*.jpg
+uploads/*.png
