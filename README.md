@@ -1,7 +1,16 @@
 # 1. Getting App to Run Locally (MacOS)
 
-## Step 1: Install Dependencies
+## Step 1: Clone Repo
+```bash
+git clone https://github.com/JBRPG/RealTime-TextReaderCamera.git tesseract-letters
+```
+
+## Step 2: Install Dependencies
 ```bash 
+
+# make sure you're in the right directory
+cd tesseract-letters
+
 # install python requirements
 pip install -r requirements.txt
 
@@ -12,14 +21,9 @@ brew install opencv@2
 brew install tesseract
 ```
 
-## Step 2: Clone Repo
-```bash
-git clone https://github.com/JBRPG/RealTime-TextReaderCamera.git tesseract-letters
-```
-
 ## Step 3: Run Flask
 ```bash
-cd tesseract-letters
+# from the tesseract-letters directory:
 export FLASK_APP=application.py
 flask run
 # now, navigate to http://127.0.0.1:5000/
