@@ -56,6 +56,23 @@ git commit --allow-empty -m "empty commit"
 git push heroku master
 ```
 
+## Step 3 (Optional): Automatic Deployment from Github to Heroku
+
+For a more detailed guide, click on the link below:
+https://devcenter.heroku.com/articles/github-integration
+
+You can automatically deploy builds to your Heroku server by doing the following:
+
+1. Go to the dashboard and click on Deploy. You'll see the options for configuring github deployment.
+1. Enable Github integration by clicking on Github under deployment method.
+1. Connect to Github with your user name and search for the appropriate repository to link.
+1. Under automatic deploys section, enable automatic deploys
+1. To make sure that the deploy works, you can click on deploy branch under manual deploy to ensure the application works
+1. When automatic deploy is successful, now you can enjoy building and deploying code from Github without worrying about doing a separate commit to the heroku server side.
+
+Note: Connecting to Github from Heroku will create a webhook to the github repository, which allows for convenient deployment onto other servers while serving the github repository as the master source code.
+
+
 # 3. Posting Data to Server (Client-Side)
 Please see `static/js/image-capture.js` and `templates/uploader.html` for examples re: how to transmit an image to the server. You can just post directly to the Heroku endpoints from any local file you don't want to create your own server:
 
