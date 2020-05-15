@@ -2,14 +2,14 @@
 
 ## Step 1: Clone Repo
 ```bash
-git clone https://github.com/JBRPG/RealTime-TextReaderCamera.git tesseract-letters
+git clone https://github.com/JBRPG/RealTime-TextReaderCamera.git sound_city_server
 ```
 
 ## Step 2: Install Dependencies
 ```bash 
 
 # make sure you're in the right directory
-cd tesseract-letters
+cd sound_city_server
 
 # install python requirements
 pip install -r requirements.txt
@@ -23,7 +23,7 @@ brew install tesseract
 
 ## Step 3: Run Flask
 ```bash
-# from the tesseract-letters directory:
+# from the sound_city_server directory:
 export FLASK_APP=application.py
 flask run
 # now, navigate to http://127.0.0.1:5000/
