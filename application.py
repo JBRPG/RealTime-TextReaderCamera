@@ -13,8 +13,9 @@ from src.recognize_text import get_letters_from_image
 import json, os
 import base64
 
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
