@@ -92,4 +92,3 @@ fetch('https://tesseract-letters.herokuapp.com/', {
     <input type="submit" value="Upload">
 </form>
 ```
-
